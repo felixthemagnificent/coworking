@@ -2,7 +2,7 @@
 lock '3.5.0'
 
 set :application, 'coworking'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:felixthemagnificent/coworking.git'
 set :nginx_server_name, 'localhost
 '
 # Default branch is :master
@@ -26,7 +26,7 @@ set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system')
-set :rvm_ruby_version, '2.2.3'
+set :rvm_ruby_version, '2.2.1'
 
 # Default value for :pty is false
 # set :pty, true
