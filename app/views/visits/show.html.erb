@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @visit.customer.name %>
+</p>
+
+<p>
+  <strong>Membership:</strong>
+  <%= @visit.membership %>
+</p>
+
+<p>
+  <strong>Check in:</strong>
+  <%= @visit.check_in %>
+</p>
+
+<p>
+  <strong>Check out:</strong>
+  <%= @visit.check_out %>
+</p>
+
+<h3>Заказ</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Блюдо</th>
+      <th>Количество</th>
+      <th>Цена/шт</th>
+      <th>Цена</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @visit.order.order_details.each do |order_detail| %>
+      <tr>
+        <td><%= order_detail.meal.name %></td>
+        <td><%= order_detail.quantity %></td>
+        <td><%= order_detail.meal.price %></td>
+        <td><%= order_detail.quantity * order_detail.meal.price %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+  	<tr>
+  		<td>Итого</td>
+  		<td></td>
+  		<td></td>
+  		<td><%= @sum %></td>
+  	</tr>
+  </tfoot>
+</table>
+
+<br>
+
+<%= link_to 'Edit', edit_visit_path(@visit) %> |
+<%= link_to 'Back', visits_path %>

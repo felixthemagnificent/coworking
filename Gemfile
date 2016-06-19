@@ -15,6 +15,20 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
+
+group :development do
+  gem 'capistrano-unicorn-nginx'
+  gem 'capistrano-rails-collection'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rails-console'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-rvm'
+  gem 'capistrano-upload-config'
+  gem 'capistrano-sidekiq'
+  gem 'capistrano'
+end
+
 gem 'administrate'
 gem 'bootstrap-sass'
 gem 'devise'
@@ -27,3 +41,4 @@ group :development do
   gem 'quiet_assets'
   gem 'rails_layout'
 end
+gem 'jquery-ui-rails'

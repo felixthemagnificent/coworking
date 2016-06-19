@@ -1,0 +1,35 @@
+<%= simple_form_for(@visit) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= simple_form_for :other do |o| %>
+    <%= o.text_field :name %>
+    <% end %>
+    <!--<%= f.input :membership, collection: @memberships, selected: 1 %>
+    <%= f.input :check_in %>-->
+    <!--<%= f.input :check_out %>-->
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $('#visit_customer').autocomplete({
+    source: function (request, response) {
+      $.ajax({
+        url: '/customers.json',
+        data: {
+          customer: {
+            name: request.term
+          }
+        },
+        success: function (data)
+        {
+          response(data);
+        }
+      });
+    }
+  })
+</script>
