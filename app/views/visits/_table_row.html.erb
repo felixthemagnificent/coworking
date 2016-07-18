@@ -1,0 +1,7 @@
+<tr id="row_<%= od.id %>">
+        <td><%= od.meal.name %></td>
+        <td><%= od.quantity.to_s + ' x ' + od.meal.price.to_s %></td>
+        <td><%= od.quantity * od.meal.price %></td>
+        <td><%= button_to "Delete Product", visit_path(od), remote: true, 
+                                  method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-secondary" %></td>
+</tr>

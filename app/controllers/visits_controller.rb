@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:show, :edit, :update, :destroy]
+  before_action :set_visit, only: [:show, :edit, :update, :addmeal]
 
   # GET /visits
   # GET /visits.json
@@ -7,19 +7,42 @@ class VisitsController < ApplicationController
     @visits = Visit.all
   end
 
+  # POST /visits/1
+  def addmeal
+    meal = Meal.where(name: meal_params[:meal])
+    quantity = meal_params[:quantity]
+    unless meal.nil?
+      @visit.order.meals << meal
+      @visit.order.order_details.last.update(quantity: quantity)
+      respond_to do |format|
+        format.js   { render :new_row, order: @visit.order.order_details.last }
+      end
+    end
+  end
+
   # GET /visits/1
   # GET /visits/1.json
   def show
-    @sum = 0
-    @visit.order.order_details.each { |od| @sum += od.quantity * od.meal.price }
+    sum = 0
+    grid_details = []
+    @visit.order.order_details.each do |od|
+
+        grid_details.push({
+          meal: od.meal.name,
+          price_quant: od.quantity.to_s + ' x ' + od.meal.price.to_s,
+          final_price: od.quantity * od.meal.price
+          })
+      sum += od.quantity * od.meal.price
+      end unless @visit.order.nil?
+      respond_to do |format|
+        format.html { render :show }
+        format.json { render json: grid_details }
+      end
+      #render json: grid_details
   end
 
   # GET /visits/new
   def new
-    @memberships = []
-    Membership.all.each { |membership|
-      @memberships.push([membership.name, membership.id])
-    }
     @visit = Visit.new
   end
 
@@ -31,8 +54,9 @@ class VisitsController < ApplicationController
   # POST /visits.json
   def create
     @visit = Visit.new
-    @visit.customer = Customer.where(visit_customer_params) unless Customer.where(visit_customer_params).empty? 
+    @visit.customer = Customer.where(visit_customer_params) unless Customer.where(visit_customer_params).empty?
     @visit.check_in = Time.now
+    @visit.order = Order.new
     respond_to do |format|
       if @visit.save
         format.html { redirect_to @visit, notice: 'Visit was successfully created.' }
@@ -61,10 +85,14 @@ class VisitsController < ApplicationController
   # DELETE /visits/1
   # DELETE /visits/1.json
   def destroy
-    @visit.destroy
+    @id = params[:id]
+    visit_order_details = OrderDetail.find(@id)
+    visit_order_details.destroy
+    #.destroy
     respond_to do |format|
       format.html { redirect_to visits_url, notice: 'Visit was successfully destroyed.' }
       format.json { head :no_content }
+      format.js { render 'delete_row', id: @id}
     end
   end
 
@@ -74,13 +102,16 @@ class VisitsController < ApplicationController
       @visit = Visit.find(params[:id])
     end
 
+    def meal_params
+      params.require(:orderdetail).permit(:meal, :quantity)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_save_params
       params.require(:visit).permit(:membership)
     end
 
     def visit_customer_params
-      params.require(:visit).permit(:customer)
+      params.require(:other).permit(:name)
     end
 
     def visit_params

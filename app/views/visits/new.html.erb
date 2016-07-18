@@ -6,16 +6,16 @@
 		<%= simple_form_for(@visit) do |f| %>
 		  <%= f.error_notification %>
 		  <div class="row">
-			  <div class="form-inputs">
-			    <%= simple_form_for :other do |o| %>
-			    <%= o.text_field :name, class: 'form-control' %>
-			    <% end %>
-			  </div>
-
-			  <div class="form-actions">
-			    <%= f.button :submit, class: 'btn btn-primary btn-lg', style: 'align:center' %>
-			  </div>
+		  <div class="form-inputs">
+		    <%= simple_form_for :other do |o| %>
+		    <%= o.text_field :name, class: 'form-control' %>
+		    <% end %>
 		  </div>
+
+		  <div class="form-actions">
+		    <%= f.button :submit, class: 'btn btn-primary btn-lg', style: 'align:center' %>
+		  </div>
+		  
 		<% end %>
 
 	</div>

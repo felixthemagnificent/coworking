@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :customers
   resources :orders
   resources :meals
+  post '/visits/:id' => "visits#addmeal"
   namespace :admin do
     resources :users
     root to: "users#index"
