@@ -41,12 +41,17 @@
 
 
 <br>
+<% unless @visit.order_closed %>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Добавить блюдо
+  </button>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Добавить блюдо
-</button>
 
+  <a class="btn btn-primary btn-lg" href="close_order">
+    Закрыть счет
+  </a>
+<% end %>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">

@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
   resources :memberships
-  resources :visits
+  resources :visits do
+    member do
+      get 'close_order'
+    end
+    collection do
+      post ':id' => "visits#addmeal"
+    end
+  end
   resources :customers
   resources :orders
   resources :meals
-  post '/visits/:id' => "visits#addmeal"
+
   namespace :admin do
     resources :users
     root to: "users#index"
